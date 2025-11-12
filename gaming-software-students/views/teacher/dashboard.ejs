@@ -1,0 +1,74 @@
+<%- include('../partials/header') %>
+
+<h2>Teacher Dashboard</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/teacher/dashboard" class="list-group-item list-group-item-action active">Dashboard</a>
+      <a href="/teacher/quiz/create" class="list-group-item list-group-item-action">Create Quiz</a>
+      <a href="/teacher/students" class="list-group-item list-group-item-action">View Students</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card bg-primary text-white">
+          <div class="card-body">
+            <h5 class="card-title">Total Quizzes</h5>
+            <h2><%= quizzes.length %></h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-success text-white">
+          <div class="card-body">
+            <h5 class="card-title">Total Students</h5>
+            <h2><%= studentCount %></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4>My Quizzes</h4>
+    <% if (quizzes.length === 0) { %>
+      <div class="alert alert-info">You haven't created any quizzes yet. <a href="/teacher/quiz/create">Create one now</a></div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Subject</th>
+            <th>Standard</th>
+            <th>Questions</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% quizzes.forEach(quiz => { %>
+            <tr>
+              <td><%= quiz.title %></td>
+              <td><%= quiz.subject %></td>
+              <td><%= quiz.standard %></td>
+              <td><%= quiz.questions.length %></td>
+              <td>
+                <% if (quiz.isActive) { %>
+                  <span class="badge bg-success">Active</span>
+                <% } else { %>
+                  <span class="badge bg-secondary">Inactive</span>
+                <% } %>
+              </td>
+              <td>
+                <a href="/teacher/quiz/<%= quiz.id %>/attempts" class="btn btn-sm btn-info">View Attempts</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,91 @@
+<%- include('../partials/header') %>
+
+<h2>Create New Quiz</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/teacher/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+      <a href="/teacher/quiz/create" class="list-group-item list-group-item-action active">Create Quiz</a>
+      <a href="/teacher/students" class="list-group-item list-group-item-action">View Students</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <form method="POST" action="/teacher/quiz/create">
+      <div class="mb-3">
+        <label for="title" class="form-label">Quiz Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" class="form-control" id="subject" name="subject" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="standard" class="form-label">Standard</label>
+        <select class="form-select" id="standard" name="standard" required>
+          <option value="">Select Standard</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+      </div>
+
+      <hr>
+      <h4>Questions</h4>
+      <div id="questionsContainer">
+        <div class="card mb-3 question-card">
+          <div class="card-body">
+            <h5>Question 1</h5>
+            <div class="mb-3">
+              <label class="form-label">Question Text</label>
+              <textarea class="form-control" name="questionText" required></textarea>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Option A</label>
+              <input type="text" class="form-control" name="optionA" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Option B</label>
+              <input type="text" class="form-control" name="optionB" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Option C</label>
+              <input type="text" class="form-control" name="optionC" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Option D</label>
+              <input type="text" class="form-control" name="optionD" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Correct Answer</label>
+              <select class="form-select" name="correctAnswer" required>
+                <option value="">Select Correct Answer</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Marks</label>
+              <input type="number" class="form-control" name="marks" value="1" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success">Create Quiz</button>
+      <a href="/teacher/dashboard" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<h2>Quiz Attempts: <%= quiz.title %></h2>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4>Quiz Information</h4>
+        <p><strong>Subject:</strong> <%= quiz.subject %></p>
+        <p><strong>Standard:</strong> <%= quiz.standard %></p>
+        <p><strong>Description:</strong> <%= quiz.description || 'N/A' %></p>
+      </div>
+    </div>
+
+    <h4>Student Attempts</h4>
+    <% if (attempts.length === 0) { %>
+      <div class="alert alert-info">No students have attempted this quiz yet.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Score</th>
+            <th>Percentage</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% attempts.forEach(attempt => { %>
+            <tr>
+              <td><%= attempt.student.name %></td>
+              <td><%= attempt.score %>/<%= attempt.totalMarks %></td>
+              <td><%= ((attempt.score / attempt.totalMarks) * 100).toFixed(2) %>%</td>
+              <td><%= new Date(attempt.completedAt).toLocaleDateString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <a href="/teacher/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

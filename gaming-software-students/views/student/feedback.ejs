@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+
+<h2>Teacher Feedback</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/student/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+      <a href="/student/profile" class="list-group-item list-group-item-action">Profile</a>
+      <a href="/student/results" class="list-group-item list-group-item-action">Results</a>
+      <a href="/student/leaderboard" class="list-group-item list-group-item-action">Leaderboard</a>
+      <a href="/student/feedback" class="list-group-item list-group-item-action active">Feedback</a>
+      <a href="/student/fees" class="list-group-item list-group-item-action">Fees</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <% if (feedbacks.length === 0) { %>
+      <div class="alert alert-info">No feedback from teachers yet.</div>
+    <% } else { %>
+      <% feedbacks.forEach(feedback => { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= feedback.subject %></h5>
+            <p class="card-text"><%= feedback.message %></p>
+            <p class="text-muted">
+              <small>From: <%= feedback.teacher.name %> | Date: <%= new Date(feedback.createdAt).toLocaleDateString() %></small>
+            </p>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
