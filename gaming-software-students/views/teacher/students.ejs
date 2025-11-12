@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+<h2>Students List</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/teacher/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+      <a href="/teacher/quiz/create" class="list-group-item list-group-item-action">Create Quiz</a>
+      <a href="/teacher/students" class="list-group-item list-group-item-action active">View Students</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <% if (students.length === 0) { %>
+      <div class="alert alert-info">No students registered yet.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Standard</th>
+            <th>Section</th>
+            <th>School</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% students.forEach(student => { %>
+            <tr>
+              <td><%= student.name %></td>
+              <td><%= student.email %></td>
+              <td><%= student.standard %></td>
+              <td><%= student.section %></td>
+              <td><%= student.school %></td>
+              <td>
+                <a href="/teacher/student/<%= student.id %>" class="btn btn-sm btn-primary">View Details</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

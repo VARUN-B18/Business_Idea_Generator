@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<h2><%= quiz.title %></h2>
+<p class="text-muted">Subject: <%= quiz.subject %> | Standard: <%= quiz.standard %></p>
+
+<form method="POST" action="/student/quiz/<%= quiz.id %>/submit">
+  <% quiz.questions.forEach((question, index) => { %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Question <%= index + 1 %></h5>
+        <p class="card-text"><%= question.questionText %></p>
+        
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question_<%= question.id %>" id="q<%= question.id %>_a" value="A" required>
+          <label class="form-check-label" for="q<%= question.id %>_a">
+            A) <%= question.optionA %>
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question_<%= question.id %>" id="q<%= question.id %>_b" value="B">
+          <label class="form-check-label" for="q<%= question.id %>_b">
+            B) <%= question.optionB %>
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question_<%= question.id %>" id="q<%= question.id %>_c" value="C">
+          <label class="form-check-label" for="q<%= question.id %>_c">
+            C) <%= question.optionC %>
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question_<%= question.id %>" id="q<%= question.id %>_d" value="D">
+          <label class="form-check-label" for="q<%= question.id %>_d">
+            D) <%= question.optionD %>
+          </label>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+  
+  <button type="submit" class="btn btn-success btn-lg">Submit Quiz</button>
+  <a href="/student/dashboard" class="btn btn-secondary btn-lg">Cancel</a>
+</form>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,57 @@
+<%- include('../partials/header') %>
+
+<h2>Fees Status</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/student/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+      <a href="/student/profile" class="list-group-item list-group-item-action">Profile</a>
+      <a href="/student/results" class="list-group-item list-group-item-action">Results</a>
+      <a href="/student/leaderboard" class="list-group-item list-group-item-action">Leaderboard</a>
+      <a href="/student/feedback" class="list-group-item list-group-item-action">Feedback</a>
+      <a href="/student/fees" class="list-group-item list-group-item-action active">Fees</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <% if (hasDue) { %>
+      <div class="alert alert-danger">
+        <strong>Fees Due!</strong> You have unpaid fees. Please contact the administration.
+      </div>
+    <% } %>
+
+    <% if (fees.length === 0) { %>
+      <div class="alert alert-info">No fee records found.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Academic Year</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Paid Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% fees.forEach(fee => { %>
+            <tr>
+              <td><%= fee.academicYear %></td>
+              <td>₹<%= fee.amount %></td>
+              <td>
+                <% if (fee.isPaid) { %>
+                  <span class="badge bg-success">Paid</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Unpaid</span>
+                <% } %>
+              </td>
+              <td><%= fee.paidDate ? new Date(fee.paidDate).toLocaleDateString() : 'N/A' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

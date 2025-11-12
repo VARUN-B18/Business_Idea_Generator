@@ -1,0 +1,98 @@
+<%- include('../partials/header') %>
+
+<h2>Student Details: <%= student.name %></h2>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4>Student Information</h4>
+        <table class="table">
+          <tr>
+            <th>Name:</th>
+            <td><%= student.name %></td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td><%= student.email %></td>
+          </tr>
+          <tr>
+            <th>Standard:</th>
+            <td><%= student.standard %></td>
+          </tr>
+          <tr>
+            <th>Section:</th>
+            <td><%= student.section %></td>
+          </tr>
+          <tr>
+            <th>School:</th>
+            <td><%= student.school %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <h4>Quiz Attempts</h4>
+    <% if (attempts.length === 0) { %>
+      <div class="alert alert-info">No quiz attempts yet.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Quiz</th>
+            <th>Subject</th>
+            <th>Score</th>
+            <th>Percentage</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% attempts.forEach(attempt => { %>
+            <tr>
+              <td><%= attempt.quiz.title %></td>
+              <td><%= attempt.quiz.subject %></td>
+              <td><%= attempt.score %>/<%= attempt.totalMarks %></td>
+              <td><%= ((attempt.score / attempt.totalMarks) * 100).toFixed(2) %>%</td>
+              <td><%= new Date(attempt.completedAt).toLocaleDateString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <h4 class="mt-4">Add Feedback</h4>
+    <form method="POST" action="/teacher/feedback">
+      <input type="hidden" name="studentId" value="<%= student.id %>">
+      <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" class="form-control" id="subject" name="subject" required>
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Feedback Message</label>
+        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Feedback</button>
+    </form>
+
+    <h4 class="mt-4">Previous Feedback</h4>
+    <% if (feedbacks.length === 0) { %>
+      <div class="alert alert-info">No feedback given yet.</div>
+    <% } else { %>
+      <% feedbacks.forEach(feedback => { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= feedback.subject %></h5>
+            <p class="card-text"><%= feedback.message %></p>
+            <p class="text-muted">
+              <small>By: <%= feedback.teacher.name %> | Date: <%= new Date(feedback.createdAt).toLocaleDateString() %></small>
+            </p>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <a href="/teacher/students" class="btn btn-secondary mt-3">Back to Students</a>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

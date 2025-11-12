@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+
+<h2>Student Dashboard</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/student/dashboard" class="list-group-item list-group-item-action active">Dashboard</a>
+      <a href="/student/profile" class="list-group-item list-group-item-action">Profile</a>
+      <a href="/student/results" class="list-group-item list-group-item-action">Results</a>
+      <a href="/student/leaderboard" class="list-group-item list-group-item-action">Leaderboard</a>
+      <a href="/student/feedback" class="list-group-item list-group-item-action">Feedback</a>
+      <a href="/student/fees" class="list-group-item list-group-item-action">Fees</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <h4>Available Quizzes</h4>
+    <% if (quizzes.length === 0) { %>
+      <div class="alert alert-info">No active quizzes available at the moment.</div>
+    <% } else { %>
+      <div class="row">
+        <% quizzes.forEach(quiz => { %>
+          <div class="col-md-6 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><%= quiz.title %></h5>
+                <p class="card-text"><%= quiz.description || 'No description' %></p>
+                <p class="text-muted">Subject: <%= quiz.subject %> | Standard: <%= quiz.standard %></p>
+                <p class="text-muted">Questions: <%= quiz.questions.length %></p>
+                <a href="/student/quiz/<%= quiz.id %>" class="btn btn-primary">Take Quiz</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <h4 class="mt-4">Recent Attempts</h4>
+    <% if (attempts.length === 0) { %>
+      <div class="alert alert-info">You haven't attempted any quizzes yet.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Quiz</th>
+            <th>Subject</th>
+            <th>Score</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% attempts.slice(0, 5).forEach(attempt => { %>
+            <tr>
+              <td><%= attempt.quiz.title %></td>
+              <td><%= attempt.quiz.subject %></td>
+              <td><%= attempt.score %>/<%= attempt.totalMarks %></td>
+              <td><%= new Date(attempt.completedAt).toLocaleDateString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

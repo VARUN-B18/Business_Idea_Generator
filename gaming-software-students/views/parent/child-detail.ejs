@@ -1,0 +1,125 @@
+<%- include('../partials/header') %>
+
+<h2>Child Details: <%= child.name %></h2>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4>Student Information</h4>
+        <table class="table">
+          <tr>
+            <th>Name:</th>
+            <td><%= child.name %></td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td><%= child.email %></td>
+          </tr>
+          <tr>
+            <th>Standard:</th>
+            <td><%= child.standard %></td>
+          </tr>
+          <tr>
+            <th>Section:</th>
+            <td><%= child.section %></td>
+          </tr>
+          <tr>
+            <th>School:</th>
+            <td><%= child.school %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <h4>Quiz Results</h4>
+    <% if (attempts.length === 0) { %>
+      <div class="alert alert-info">No quiz attempts yet.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Quiz</th>
+            <th>Subject</th>
+            <th>Score</th>
+            <th>Percentage</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% attempts.forEach(attempt => { %>
+            <tr>
+              <td><%= attempt.quiz.title %></td>
+              <td><%= attempt.quiz.subject %></td>
+              <td><%= attempt.score %>/<%= attempt.totalMarks %></td>
+              <td><%= ((attempt.score / attempt.totalMarks) * 100).toFixed(2) %>%</td>
+              <td><%= new Date(attempt.completedAt).toLocaleDateString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <h4 class="mt-4">Teacher Feedback</h4>
+    <% if (feedbacks.length === 0) { %>
+      <div class="alert alert-info">No feedback from teachers yet.</div>
+    <% } else { %>
+      <% feedbacks.forEach(feedback => { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= feedback.subject %></h5>
+            <p class="card-text"><%= feedback.message %></p>
+            <p class="text-muted">
+              <small>From: <%= feedback.teacher.name %> | Date: <%= new Date(feedback.createdAt).toLocaleDateString() %></small>
+            </p>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <h4 class="mt-4">Fees Status</h4>
+    <% if (hasDue) { %>
+      <div class="alert alert-danger">
+        <strong>Fees Due!</strong> Your child has unpaid fees. Please contact the administration.
+      </div>
+    <% } %>
+
+    <% if (fees.length === 0) { %>
+      <div class="alert alert-info">No fee records found.</div>
+    <% } else { %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Academic Year</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Paid Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% fees.forEach(fee => { %>
+            <tr>
+              <td><%= fee.academicYear %></td>
+              <td>₹<%= fee.amount %></td>
+              <td>
+                <% if (fee.isPaid) { %>
+                  <span class="badge bg-success">Paid</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Unpaid</span>
+                <% } %>
+              </td>
+              <td><%= fee.paidDate ? new Date(fee.paidDate).toLocaleDateString() : 'N/A' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <div class="mt-4">
+      <a href="/parent/child/<%= child.id %>/report/2024-2025" class="btn btn-success">Download Report Card (2024-2025)</a>
+      <a href="/parent/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+<h2>My Profile</h2>
+
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="list-group">
+      <a href="/student/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+      <a href="/student/profile" class="list-group-item list-group-item-action active">Profile</a>
+      <a href="/student/results" class="list-group-item list-group-item-action">Results</a>
+      <a href="/student/leaderboard" class="list-group-item list-group-item-action">Leaderboard</a>
+      <a href="/student/feedback" class="list-group-item list-group-item-action">Feedback</a>
+      <a href="/student/fees" class="list-group-item list-group-item-action">Fees</a>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Student Information</h4>
+        <table class="table">
+          <tr>
+            <th>Name:</th>
+            <td><%= student.name %></td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td><%= student.email %></td>
+          </tr>
+          <tr>
+            <th>Standard:</th>
+            <td><%= student.standard %></td>
+          </tr>
+          <tr>
+            <th>Section:</th>
+            <td><%= student.section %></td>
+          </tr>
+          <tr>
+            <th>School:</th>
+            <td><%= student.school %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
